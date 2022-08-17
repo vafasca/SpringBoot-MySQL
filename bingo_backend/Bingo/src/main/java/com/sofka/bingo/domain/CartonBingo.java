@@ -27,4 +27,10 @@ public class CartonBingo implements Serializable {
     @JoinColumn(name = "player_idplayer")
     private Player playerIdplayer;
 
+
+
+//    public void setPlayerIdplayer(Player playerIdplayer) {
+//        this.playerIdplayer = playerIdplayer;
+//    }
+
 }

@@ -1,9 +1,12 @@
 package com.sofka.bingo.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -18,7 +21,18 @@ public class Room implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "room_id", nullable = false)
-    private Long id;
+    private Integer id;
 
-    //TODO [JPA Buddy] generate columns from DB
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "roomRoom",
+            targetEntity = Player.class,
+            cascade = CascadeType.REMOVE
+    )
+    @JsonManagedReference
+    private List<Player> players = new ArrayList<>();
+
+    @OneToMany(mappedBy = "roomRoom")
+    private List<TombolaNumber> tombolaNumbers = new ArrayList<>();
+
 }

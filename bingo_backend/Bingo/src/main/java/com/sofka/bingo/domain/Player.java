@@ -1,10 +1,14 @@
 package com.sofka.bingo.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 @Data
 @Entity
 @Table(name = "player")
@@ -18,13 +22,21 @@ public class Player implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idplayer", nullable = false)
-    private Long id;
+    private Integer id;
 
-    @Column(name = "play_mongo_id", length = 45)
+    @Column(name = "play_mongo_id", nullable = false, length = 45)
     private String playMongoId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_room_id")
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            targetEntity = Room.class,
+            optional = false
+    )
+    @JsonBackReference
+    @JoinColumn(name = "room_room_id", nullable = false)
     private Room roomRoom;
+
+    @OneToMany(mappedBy = "playerIdplayer")
+    private List<CartonBingo> cartonBingos = new ArrayList<>();
 
 }

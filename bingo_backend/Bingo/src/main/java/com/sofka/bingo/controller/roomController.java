@@ -1,5 +1,6 @@
 package com.sofka.bingo.controller;
 
+
 import com.sofka.bingo.domain.CartonBingo;
 import com.sofka.bingo.domain.Player;
 import com.sofka.bingo.domain.Room;
@@ -58,8 +59,23 @@ public class roomController {
         return new ResponseEntity(response, httpStatus);
     }
 
+    @PostMapping(path = "/api/v1/cartonBingo")
+    public ResponseEntity<Response> crearCartonBingo(@RequestBody CartonBingo cartonBingo, Player player){
+        response.restart();
+        try {
+            log.info("Carton a crear: {}", cartonBingo);
+            response.data =bingoService.createCarton(cartonBingo);
+            httpStatus = HttpStatus.CREATED;
+        }catch (DataAccessException exception) {
+            getErrorMessageForResponse(exception);
+        } catch (Exception exception) {
+            getErrorMessageInternal(exception);
+        }
+        return new ResponseEntity(response, httpStatus);
+    }
+
     @PostMapping(path = "/api/v1/newPlayer")
-    public ResponseEntity<Response> regPlayer(@RequestBody Player player, Room room)  { //agregar el @Requestbody
+    public ResponseEntity<Response> regPlayer(Player player, Room room)  { //agregar el @Requestbody
         response.restart();
         try {
             log.info("Player a agregar: {}", player);
@@ -74,13 +90,37 @@ public class roomController {
         return new ResponseEntity(response, httpStatus);
     }
 
-    @GetMapping(path = "/api/v1/room/")
-    public ResponseEntity<Response> listRoom(Room room){
+    @GetMapping(path = "/api/v1/room")
+    public ResponseEntity<Response> LastRoomBingo(Room room){
         response.restart();
         try {
-            response.data =bingoService.getRoomList(room);
+            response.data =bingoService.getLastRoom(room);
             httpStatus = HttpStatus.OK;
         } catch (Exception exception) {
+            getErrorMessageInternal(exception);
+        }
+        return new ResponseEntity(response, httpStatus);
+    }
+
+    @GetMapping(path = "/api/v1/balotas")
+    public ResponseEntity<Response> listCarton(CartonBingo cartonBingo){
+        response.restart();
+        try {
+            response.data =bingoService.getCarton(cartonBingo);
+            httpStatus = HttpStatus.OK;
+        }catch (Exception exception) {
+            getErrorMessageInternal(exception);
+        }
+        return new ResponseEntity(response, httpStatus);
+    }
+
+    @GetMapping(path = "/api/v1/playerBingo")
+    public ResponseEntity<Response> listPlayerBingo(Player player){
+        response.restart();
+        try {
+            response.data = bingoService.getPlayerBingoList(player);
+            httpStatus = HttpStatus.OK;
+        }catch (Exception exception) {
             getErrorMessageInternal(exception);
         }
         return new ResponseEntity(response, httpStatus);
