@@ -1,6 +1,7 @@
 package com.sofka.bingo.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -36,7 +37,13 @@ public class Player implements Serializable {
     @JoinColumn(name = "room_room_id", nullable = false)
     private Room roomRoom;
 
-    @OneToMany(mappedBy = "playerIdplayer")
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "playerIdplayer",
+            targetEntity = CartonBingo.class,
+            cascade = CascadeType.REMOVE
+    )
+    @JsonManagedReference
     private List<CartonBingo> cartonBingos = new ArrayList<>();
 
 }

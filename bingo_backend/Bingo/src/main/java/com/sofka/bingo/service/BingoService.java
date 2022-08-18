@@ -54,24 +54,25 @@ public class BingoService implements IBingo {
 
 
     @Override
-    public int getPlayerBingoList(Player player) {
+    public Player getPlayerBingoList(Player player) {
         List<Player> playerBingoList = playerRepository.getPlayersById();
         int tamPlayers = playerBingoList.size()-1;
-        return tamPlayers;
+        return playerBingoList.get(tamPlayers);
     }
 
     @Override
     @Transactional
     public Player registerPlayer(Player player, Room room) {
-        //Room ultimo = getLastRoom(room);
+        Room ult = getLastRoom(room);
+        player.setRoomRoom(ult);
         //player.setRoomRoom(getLastRoom(ultimo));
         return playerRepository.save(player);
     }
 
     @Override
     @Transactional
-    public CartonBingo createCarton(CartonBingo cartonBingo) {
-
+    public CartonBingo createCarton(CartonBingo cartonBingo, Player player) {
+        cartonBingo.setPlayerIdplayer(getPlayerBingoList(player));
         return cartonBingoRepository.save(cartonBingo);
     }
 

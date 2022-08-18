@@ -1,5 +1,6 @@
 package com.sofka.bingo.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,12 +19,17 @@ public class CartonBingo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id", nullable = false)
-    private Long id;
+    private Integer id;
 
     @Column(name = "cart_balota")
     private Integer cartBalota;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            targetEntity = Player.class,
+            optional = false
+    )
+    @JsonBackReference
     @JoinColumn(name = "player_idplayer")
     private Player playerIdplayer;
 

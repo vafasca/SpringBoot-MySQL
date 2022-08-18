@@ -20,11 +20,11 @@ public interface IBingo {
 
     public CartonBingo getCarton(CartonBingo cartonBingo);
 
-    public int getPlayerBingoList(Player player);
+    public Player getPlayerBingoList(Player player);
 
     public Player registerPlayer(Player player, Room room);
 
-    public CartonBingo createCarton(CartonBingo cartonBingo);
+    public CartonBingo createCarton(CartonBingo cartonBingo, Player player);
 
     public Room createRoom(Room room);
 

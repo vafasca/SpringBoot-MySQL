@@ -64,7 +64,7 @@ public class roomController {
         response.restart();
         try {
             log.info("Carton a crear: {}", cartonBingo);
-            response.data =bingoService.createCarton(cartonBingo);
+            response.data =bingoService.createCarton(cartonBingo, player);
             httpStatus = HttpStatus.CREATED;
         }catch (DataAccessException exception) {
             getErrorMessageForResponse(exception);
@@ -75,7 +75,7 @@ public class roomController {
     }
 
     @PostMapping(path = "/api/v1/newPlayer")
-    public ResponseEntity<Response> regPlayer(Player player, Room room)  { //agregar el @Requestbody
+    public ResponseEntity<Response> regPlayer(@RequestBody Player player, Room room)  { //agregar el @Requestbody
         response.restart();
         try {
             log.info("Player a agregar: {}", player);

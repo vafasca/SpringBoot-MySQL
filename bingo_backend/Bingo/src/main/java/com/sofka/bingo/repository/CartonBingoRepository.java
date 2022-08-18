@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface CartonBingoRepository extends JpaRepository<CartonBingo, Long> {
+public interface CartonBingoRepository extends JpaRepository<CartonBingo, Integer> {
     @Query(value = "SELECT crt " +
             "FROM CartonBingo crt " +
             "ORDER BY crt.cartBalota ASC ")
