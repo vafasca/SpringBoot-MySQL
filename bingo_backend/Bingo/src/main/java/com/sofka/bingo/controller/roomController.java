@@ -114,11 +114,70 @@ public class roomController {
         return new ResponseEntity(response, httpStatus);
     }
 
+    @GetMapping(path = "/api/v1/listBalotas")// todas las balotas l ultimo jugador
+    public ResponseEntity<Response> listBalotas(CartonBingo cartonBingo, Player player){
+        response.restart();
+        try {
+            response.data =bingoService.getAllBalotas(cartonBingo, player);
+            httpStatus = HttpStatus.OK;
+        }catch (Exception exception) {
+            getErrorMessageInternal(exception);
+        }
+        return new ResponseEntity(response, httpStatus);
+    }
+
+    @GetMapping(path = "/api/v1/listBalotas1")
+    public ResponseEntity<Response> listBalotasJustOne(CartonBingo cartonBingo, Player player){
+        response.restart();
+        try {
+            response.data =bingoService.getAllBalotasJustOnePlayer(cartonBingo, player);
+            httpStatus = HttpStatus.OK;
+        }catch (Exception exception) {
+            getErrorMessageInternal(exception);
+        }
+        return new ResponseEntity(response, httpStatus);
+    }
+
     @GetMapping(path = "/api/v1/playerBingo")
-    public ResponseEntity<Response> listPlayerBingo(Player player){
+    public ResponseEntity<Response> listPlayerBingo(Player player){//ultimo jugador
         response.restart();
         try {
             response.data = bingoService.getPlayerBingoList(player);
+            httpStatus = HttpStatus.OK;
+        }catch (Exception exception) {
+            getErrorMessageInternal(exception);
+        }
+        return new ResponseEntity(response, httpStatus);
+    }
+
+    /**
+     * Lista completa de jugadores
+     * @param player
+     * @return
+     */
+    @GetMapping(path = "/api/v1/listarJugadores")
+    public ResponseEntity<Response> jugadoresList(Player player){//todos los jugadores
+        response.restart();
+        try {
+            response.data = bingoService.showListPlayer(player);
+            httpStatus = HttpStatus.OK;
+        }catch (Exception exception) {
+            getErrorMessageInternal(exception);
+        }
+        return new ResponseEntity(response, httpStatus);
+    }
+
+
+
+    /**
+     * GET CON API REST TEMPLATE
+     */
+    @GetMapping(path = "api/v1/pobar")
+    public ResponseEntity<Response> test(CartonBingo cartonBingo, Player player){
+        response.restart();
+        try {
+            //bingoService.listBolas(player);
+            bingoService.apiRestJugadores(cartonBingo);
             httpStatus = HttpStatus.OK;
         }catch (Exception exception) {
             getErrorMessageInternal(exception);

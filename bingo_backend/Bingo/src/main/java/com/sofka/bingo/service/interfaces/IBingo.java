@@ -4,6 +4,8 @@ import com.sofka.bingo.domain.CartonBingo;
 import com.sofka.bingo.domain.Player;
 import com.sofka.bingo.domain.Room;
 
+import java.util.List;
+
 public interface IBingo {
 
     /**
@@ -20,6 +22,10 @@ public interface IBingo {
 
     public CartonBingo getCarton(CartonBingo cartonBingo);
 
+    public List<CartonBingo> getAllBalotas(CartonBingo cartonBingo, Player player);
+
+    public List<CartonBingo> getAllBalotasJustOnePlayer(CartonBingo cartonBingo, Player player);
+
     public Player getPlayerBingoList(Player player);
 
     public Player registerPlayer(Player player, Room room);
@@ -27,5 +33,10 @@ public interface IBingo {
     public CartonBingo createCarton(CartonBingo cartonBingo, Player player);
 
     public Room createRoom(Room room);
+
+    public List<Player> showListPlayer(Player player);
+    public List<Integer> apiRestJugadores(CartonBingo cartonBingo);
+
+    public List<Player> listBolas(Player player);
 
 }
