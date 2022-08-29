@@ -75,6 +75,17 @@ public class BingoService implements IBingo {
         return playerBingoList.get(tamPlayers);
     }
 
+    //PROBANDO
+    @Override
+    public Player getIndexPlayer(Player player, String idMongo) {
+        //List<Player> playerBingoList = playerRepository.getIndexPlayer();
+        int index = playerRepository.getIndexPlayer(idMongo);
+        List<Player> playerList = playerRepository.getPlayersById();
+        return playerList.get(index-1);
+    }
+    //
+
+
     @Override
     @Transactional
     public Player registerPlayer(Player player, Room room) {
@@ -109,7 +120,7 @@ public class BingoService implements IBingo {
     @Override
     public List<Integer> apiRestJugadores(CartonBingo cartonBingo) {
        RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:9090/api/v1/playerBingo";
+        String url = "http://localhost:9090/api/v1/playerBingo/"; //SE QUITO http://localhost:9090/api/v1/playerBingo
         ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
         LinkedHashMap<Integer, Integer> LHM = (LinkedHashMap<Integer, Integer>) response.getBody();
         List<Integer> list3 = new ArrayList<>();

@@ -28,6 +28,8 @@ public interface IBingo {
 
     public Player getPlayerBingoList(Player player);
 
+    public Player getIndexPlayer(Player player, String idMongo);
+
     public Player registerPlayer(Player player, Room room);
 
     public CartonBingo createCarton(CartonBingo cartonBingo, Player player);

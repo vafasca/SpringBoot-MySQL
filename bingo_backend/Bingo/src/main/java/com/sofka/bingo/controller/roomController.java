@@ -138,17 +138,31 @@ public class roomController {
         return new ResponseEntity(response, httpStatus);
     }
 
-    @GetMapping(path = "/api/v1/playerBingo")
-    public ResponseEntity<Response> listPlayerBingo(Player player){//ultimo jugador
+    //probando
+    @GetMapping(path = "/api/v1/playerBingo/{idMongo}")
+    public ResponseEntity<Response> listPlayerBingo(@PathVariable(value="idMongo") String idMongo, Player player){//ultimo jugador
         response.restart();
         try {
-            response.data = bingoService.getPlayerBingoList(player);
+            response.data = bingoService.getIndexPlayer(player, idMongo);
             httpStatus = HttpStatus.OK;
         }catch (Exception exception) {
             getErrorMessageInternal(exception);
         }
         return new ResponseEntity(response, httpStatus);
     }
+    //
+
+//    @GetMapping(path = "/api/v1/playerBingo")
+//    public ResponseEntity<Response> listPlayerBingo(Player player){//ultimo jugador
+//        response.restart();
+//        try {
+//            response.data = bingoService.getPlayerBingoList(player);
+//            httpStatus = HttpStatus.OK;
+//        }catch (Exception exception) {
+//            getErrorMessageInternal(exception);
+//        }
+//        return new ResponseEntity(response, httpStatus);
+//    }
 
     /**
      * Lista completa de jugadores
